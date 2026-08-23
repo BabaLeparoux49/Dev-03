@@ -15,21 +15,13 @@ export default function ResultPage() {
   const { state, reset, hydrated } = useWizard();
   const [format, setFormat] = useState<ExportFormat>("chatgpt");
   const [edited, setEdited] = useState<string | null>(null);
-  const [editBaseKey, setEditBaseKey] = useState(`${format}|base`);
 
   const generated = useMemo(
     () => buildPrompt(state, format),
     [state, format],
   );
 
-  const baseKey = `${format}|${state.idea}|${state.categoryId}|${JSON.stringify(state.answers)}|${state.extras}`;
-  if (editBaseKey !== baseKey && edited !== null) {
-    setEditBaseKey(baseKey);
-    setEdited(null);
-  } else if (editBaseKey !== baseKey) {
-    setEditBaseKey(baseKey);
-  }
-
+  // If user hasn't customized, always follow the generated prompt.
   const prompt = edited ?? generated;
   const estimate = useMemo(() => estimateSavings(prompt), [prompt]);
 

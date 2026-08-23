@@ -34,35 +34,65 @@ const WizardContext = createContext<WizardContextValue | null>(null);
 type Listener = () => void;
 const listeners = new Set<Listener>();
 
+/** In-memory cache — getSnapshot must return a stable reference. */
+let cachedState: WizardState = emptyState;
+let cacheReady = false;
+
 function emit() {
   listeners.forEach((l) => l());
 }
 
 function subscribe(listener: Listener) {
   listeners.add(listener);
-  return () => listeners.delete(listener);
+  return () => {
+    listeners.delete(listener);
+  };
 }
 
-function readStore(): WizardState {
-  if (typeof window === "undefined") return emptyState;
-  return parseState(window.sessionStorage.getItem(STORAGE_KEY)) ?? emptyState;
+function ensureCache() {
+  if (cacheReady || typeof window === "undefined") return;
+  cachedState =
+    parseState(window.sessionStorage.getItem(STORAGE_KEY)) ?? emptyState;
+  cacheReady = true;
+}
+
+function getSnapshot(): WizardState {
+  ensureCache();
+  return cachedState;
+}
+
+function getServerSnapshot(): WizardState {
+  return emptyState;
+}
+
+function getHydratedSnapshot(): boolean {
+  ensureCache();
+  return true;
+}
+
+function getHydratedServerSnapshot(): boolean {
+  return false;
 }
 
 function writeStore(next: WizardState) {
-  window.sessionStorage.setItem(STORAGE_KEY, serializeState(next));
+  cachedState = next;
+  cacheReady = true;
+  if (typeof window !== "undefined") {
+    window.sessionStorage.setItem(STORAGE_KEY, serializeState(next));
+  }
   emit();
 }
 
 function updateStore(updater: (prev: WizardState) => WizardState) {
-  writeStore(updater(readStore()));
+  writeStore(updater(cachedState));
 }
 
 export function WizardProvider({ children }: { children: ReactNode }) {
-  const state = useSyncExternalStore(subscribe, readStore, () => emptyState);
+  const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const hydrated = useSyncExternalStore(
     subscribe,
-    () => true,
-    () => false,
+    getHydratedSnapshot,
+    getHydratedServerSnapshot,
   );
 
   const setIdea = useCallback((idea: string) => {
@@ -96,7 +126,11 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const reset = useCallback(() => {
-    window.sessionStorage.removeItem(STORAGE_KEY);
+    cachedState = emptyState;
+    cacheReady = true;
+    if (typeof window !== "undefined") {
+      window.sessionStorage.removeItem(STORAGE_KEY);
+    }
     emit();
   }, []);
 
