@@ -4,21 +4,15 @@ export default function HomePage() {
   return (
     <>
       <section className="relative min-h-[calc(100vh-5.5rem)] overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
-        >
-          <div className="absolute inset-y-0 right-0 w-full bg-[linear-gradient(105deg,transparent_28%,rgba(42,90,140,0.16)_100%)] sm:w-[62%]" />
-          <HeroVisual />
-        </div>
+        <HeroBackdrop />
 
-        <div className="site-shell relative flex min-h-[calc(100vh-5.5rem)] flex-col justify-center pb-16 pt-4">
-          <p className="fade-up brand text-[clamp(3.4rem,12vw,7.5rem)] text-[var(--ink)]">
+        <div className="site-shell relative flex min-h-[calc(100vh-5.5rem)] flex-col justify-center pb-20 pt-6">
+          <p className="fade-up brand max-w-[10ch] text-[clamp(3.6rem,13vw,8rem)] text-[var(--ink)]">
             Promptia
           </p>
 
           <h1
-            className="fade-up mt-7 max-w-[14ch] hero-title text-[clamp(1.75rem,4.4vw,3.15rem)] text-[var(--ink-soft)]"
+            className="fade-up mt-8 max-w-[16ch] hero-title text-[clamp(1.7rem,4.2vw,3rem)] text-[var(--ink-soft)]"
             style={{ animationDelay: "90ms" }}
           >
             Un prompt. Zéro allers-retours.
@@ -32,10 +26,7 @@ export default function HomePage() {
             coller dans ChatGPT, Claude ou Cursor.
           </p>
 
-          <div
-            className="fade-up mt-9"
-            style={{ animationDelay: "230ms" }}
-          >
+          <div className="fade-up mt-9" style={{ animationDelay: "230ms" }}>
             <Link href="/builder" className="btn-primary">
               Commencer
               <span aria-hidden>→</span>
@@ -44,7 +35,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-[var(--line)] bg-white/40">
+      <section className="relative z-10 border-t border-[var(--line)] bg-white/55 backdrop-blur-[1px]">
         <div className="site-shell py-20 sm:py-24">
           <h2 className="display max-w-xl text-3xl text-[var(--ink)] sm:text-4xl">
             Trois gestes. Un message unique.
@@ -95,40 +86,41 @@ export default function HomePage() {
   );
 }
 
-function HeroVisual() {
-  const lines = [
-    { w: "88%", delay: "0s" },
-    { w: "62%", delay: "0.4s" },
-    { w: "74%", delay: "0.8s" },
-    { w: "51%", delay: "1.2s" },
-    { w: "81%", delay: "1.6s" },
-    { w: "44%", delay: "2s" },
-    { w: "69%", delay: "2.4s" },
-    { w: "57%", delay: "2.8s" },
+function HeroBackdrop() {
+  const strips = [
+    { top: "14%", delay: "0s", opacity: 0.55 },
+    { top: "26%", delay: "0.35s", opacity: 0.4 },
+    { top: "38%", delay: "0.7s", opacity: 0.7 },
+    { top: "50%", delay: "1.05s", opacity: 0.35 },
+    { top: "62%", delay: "1.4s", opacity: 0.6 },
+    { top: "74%", delay: "1.75s", opacity: 0.45 },
+    { top: "86%", delay: "2.1s", opacity: 0.3 },
   ];
 
   return (
-    <div className="slide-in absolute inset-y-[12%] right-[-4%] hidden w-[min(48%,520px)] sm:block">
-      <div className="hero-prompt-sheet relative h-full border border-[var(--line-strong)] bg-[rgba(255,255,255,0.58)] px-7 py-8 backdrop-blur-[2px]">
-        <div className="mb-6 flex items-center justify-between">
-          <span className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--steel)]">
-            prompt densifié
-          </span>
-          <span className="h-2 w-2 rounded-[1px] bg-[var(--accent)]" />
-        </div>
-        <div className="hero-lines space-y-4">
-          {lines.map((line, i) => (
-            <span
-              key={i}
-              style={{ width: line.w, animationDelay: line.delay }}
-            />
-          ))}
-        </div>
-        <p className="mt-8 max-w-[18ch] font-[family-name:var(--font-mono)] text-[11px] leading-relaxed text-[var(--mono-ink)] opacity-70">
-          # Rôle · Contexte · Contraintes · Format — un seul bloc, zéro
-          clarification.
-        </p>
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div className="fade-in absolute inset-0 bg-[linear-gradient(115deg,rgba(232,238,244,0.92)_0%,rgba(232,238,244,0.55)_38%,rgba(42,90,140,0.28)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_85%_40%,rgba(226,74,28,0.14),transparent_60%)]" />
+
+      <div className="hero-prompt-sheet absolute inset-x-0 inset-y-0">
+        {strips.map((s, i) => (
+          <div
+            key={i}
+            className="absolute left-[8%] right-[-5%] h-[7.5%] border-y border-[rgba(42,90,140,0.18)] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.35)_18%,rgba(42,90,140,0.12)_55%,rgba(226,74,28,0.1)_78%,transparent)]"
+            style={{
+              top: s.top,
+              opacity: s.opacity,
+              animation: `linePulse 4s ease-in-out ${s.delay} infinite`,
+            }}
+          />
+        ))}
       </div>
+
+      <p className="slide-in absolute bottom-[18%] right-[6%] hidden max-w-[22ch] text-right font-[family-name:var(--font-mono)] text-[11px] leading-relaxed tracking-wide text-[var(--steel)] sm:block">
+        # Rôle · Contexte · Contraintes · Format
+        <br />
+        un seul bloc — zéro clarification
+      </p>
     </div>
   );
 }
