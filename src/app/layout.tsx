@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Syne, Figtree, IBM_Plex_Mono } from "next/font/google";
+import { CursorField } from "@/components/CursorField";
 import { WizardProvider } from "@/components/WizardProvider";
 import "./globals.css";
 
@@ -37,9 +38,10 @@ export default function RootLayout({
       lang="fr"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body className="relative flex min-h-full flex-col">
+        <CursorField />
         <WizardProvider>
-          <header className="site-shell flex items-center justify-between py-6">
+          <header className="site-shell relative z-10 flex items-center justify-between py-6">
             <Link
               href="/"
               className="brand text-lg tracking-tight text-[var(--ink)] sm:text-xl"
@@ -55,8 +57,8 @@ export default function RootLayout({
               </Link>
             </nav>
           </header>
-          <main className="flex flex-1 flex-col">{children}</main>
-          <footer className="site-shell border-t border-[var(--line)] py-8 text-xs text-[var(--muted)]">
+          <main className="relative z-10 flex flex-1 flex-col">{children}</main>
+          <footer className="site-shell relative z-10 border-t border-[var(--line)] py-8 text-xs text-[var(--muted)]">
             Promptia — clarification avant génération. Estimations de tokens
             indicatives.
           </footer>
