@@ -5,25 +5,25 @@ export const CATEGORIES: Category[] = [
     id: "code",
     label: "Code",
     description: "Bug, feature, refactor, architecture",
-    accent: "#0d9488",
+    accent: "#2a5a8c",
   },
   {
     id: "redaction",
     label: "Rédaction",
     description: "Email, article, doc, copywriting",
-    accent: "#c2410c",
+    accent: "#e24a1c",
   },
   {
     id: "analyse",
     label: "Analyse",
     description: "Données, décision, synthèse",
-    accent: "#0369a1",
+    accent: "#1c4d6e",
   },
   {
     id: "general",
     label: "Général",
     description: "Tout le reste, rôle + contraintes",
-    accent: "#4f46e5",
+    accent: "#0a1628",
   },
 ];
 

@@ -40,14 +40,14 @@ export function PromptPreview({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {FORMATS.map((f) => (
             <button
               key={f.id}
               type="button"
-              className={`chip ${format === f.id ? "chip-active" : ""}`}
+              className={`format-tab ${format === f.id ? "format-tab-active" : ""}`}
               onClick={() => onFormatChange(f.id)}
             >
               {f.label}
@@ -59,7 +59,7 @@ export function PromptPreview({
         </button>
       </div>
       <textarea
-        className="field-input min-h-[28rem] font-[family-name:var(--font-mono)] text-sm leading-relaxed"
+        className="field-input min-h-[28rem] font-[family-name:var(--font-mono)] text-[13px] leading-relaxed text-[var(--mono-ink)]"
         value={prompt}
         onChange={(e) => onPromptChange(e.target.value)}
         spellCheck={false}

@@ -21,7 +21,6 @@ export default function ResultPage() {
     [state, format],
   );
 
-  // If user hasn't customized, always follow the generated prompt.
   const prompt = edited ?? generated;
   const estimate = useMemo(() => estimateSavings(prompt), [prompt]);
 
@@ -35,28 +34,27 @@ export default function ResultPage() {
 
   if (!state.idea.trim() || !state.categoryId) {
     return (
-      <div className="site-shell flex flex-1 flex-col items-start justify-center gap-4 py-16">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl">
-          Aucun prompt en cours
-        </h1>
-        <p className="text-[var(--muted)]">
+      <div className="site-shell flex flex-1 flex-col items-start justify-center gap-5 py-16">
+        <h1 className="display text-3xl sm:text-4xl">Aucun prompt en cours</h1>
+        <p className="max-w-md text-[var(--muted)]">
           Reprenez le wizard pour construire un prompt.
         </p>
         <Link href="/builder" className="btn-primary">
           Commencer
+          <span aria-hidden>→</span>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="site-shell flex flex-1 flex-col gap-6 py-8 sm:py-12">
-      <div className="fade-up flex flex-wrap items-end justify-between gap-4">
+    <div className="site-shell flex flex-1 flex-col gap-10 py-10 sm:py-14">
+      <div className="fade-up flex flex-wrap items-end justify-between gap-5 border-b border-[var(--line)] pb-8">
         <div>
-          <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+          <p className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]">
             Résultat
           </p>
-          <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
+          <h1 className="display mt-2 text-3xl sm:text-5xl">
             Votre prompt est prêt
           </h1>
         </div>
@@ -77,8 +75,8 @@ export default function ResultPage() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
-        <div className="panel fade-up" style={{ animationDelay: "60ms" }}>
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="fade-up" style={{ animationDelay: "70ms" }}>
           <PromptPreview
             prompt={prompt}
             format={format}
@@ -90,14 +88,14 @@ export default function ResultPage() {
           />
         </div>
         <aside
-          className="fade-up space-y-4"
-          style={{ animationDelay: "120ms" }}
+          className="fade-up space-y-8 lg:border-l lg:border-[var(--line)] lg:pl-8"
+          style={{ animationDelay: "140ms" }}
         >
           <TokenSavingsBadge estimate={estimate} />
-          <div className="panel text-sm leading-relaxed text-[var(--muted)]">
-            Collez ce prompt en un seul message dans votre outil IA. Vous
-            évitez les tours de clarification qui renvoient tout l’historique.
-          </div>
+          <p className="text-sm leading-relaxed text-[var(--muted)]">
+            Collez ce prompt en un seul message dans votre outil IA. Vous évitez
+            les tours de clarification qui renvoient tout l’historique.
+          </p>
         </aside>
       </div>
     </div>

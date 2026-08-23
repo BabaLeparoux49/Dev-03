@@ -99,15 +99,15 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="site-shell flex flex-1 flex-col py-8 sm:py-12">
-      <div className="mx-auto w-full max-w-2xl">
+    <div className="site-shell flex flex-1 flex-col py-10 sm:py-14">
+      <div className="mx-auto w-full max-w-xl">
         <ProgressBar
           current={progress.current}
           total={progress.total}
           label="Construction du prompt"
         />
 
-        <div className="panel mt-6 fade-up">
+        <div className="fade-up mt-10 border-t-2 border-[var(--ink)] pt-8">
           {phase === "idea" ? (
             <IdeaPhase
               idea={state.idea}
@@ -136,10 +136,8 @@ export default function BuilderPage() {
           state.categoryId &&
           !currentQuestion &&
           isFlowComplete(state.categoryId, state.answers) ? (
-            <div className="space-y-4">
-              <h2 className="font-[family-name:var(--font-display)] text-2xl">
-                Questions terminées
-              </h2>
+            <div className="space-y-5">
+              <h2 className="display text-2xl">Questions terminées</h2>
               <button
                 type="button"
                 className="btn-primary"
@@ -160,7 +158,7 @@ export default function BuilderPage() {
           ) : null}
         </div>
 
-        <p className="mt-4 text-center text-xs text-[var(--muted)]">
+        <p className="mt-8 text-center text-xs text-[var(--muted)]">
           <Link href="/" className="underline-offset-2 hover:underline">
             Retour à l’accueil
           </Link>
@@ -181,12 +179,12 @@ function IdeaPhase({
 }) {
   const ok = idea.trim().length >= 8;
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <h1 className="font-[family-name:var(--font-display)] text-3xl leading-tight">
+        <h1 className="display text-3xl leading-tight sm:text-4xl">
           Quelle est votre idée ?
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
           Pas besoin d’être précis — on cadrera ensuite avec des questions.
         </p>
       </div>
@@ -205,6 +203,7 @@ function IdeaPhase({
           onClick={onNext}
         >
           Continuer
+          <span aria-hidden>→</span>
         </button>
       </div>
     </div>
@@ -219,16 +218,16 @@ function CategoryPhase({
   onBack: () => void;
 }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <h1 className="font-[family-name:var(--font-display)] text-3xl leading-tight">
+        <h1 className="display text-3xl leading-tight sm:text-4xl">
           Quelle catégorie ?
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
           Ça choisit le parcours de questions le plus court.
         </p>
       </div>
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid gap-2.5 sm:grid-cols-2">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
@@ -236,8 +235,8 @@ function CategoryPhase({
             className="option-btn"
             onClick={() => onSelect(cat.id)}
           >
-            <span className="font-medium">{cat.label}</span>
-            <span className="mt-0.5 block text-sm text-[var(--muted)]">
+            <span className="font-semibold">{cat.label}</span>
+            <span className="mt-1 block text-sm text-[var(--muted)]">
               {cat.description}
             </span>
           </button>
@@ -264,8 +263,7 @@ function QuestionsPhase({
   onBack: () => void;
 }) {
   const initial =
-    value ??
-    (question.inputType === "multi" ? ([] as string[]) : "");
+    value ?? (question.inputType === "multi" ? ([] as string[]) : "");
   const [draft, setDraft] = useState<string | string[]>(initial);
 
   const canContinue = (() => {
@@ -281,7 +279,7 @@ function QuestionsPhase({
   })();
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <QuestionStep question={question} value={draft} onChange={setDraft} />
       <div className="flex justify-between gap-3">
         <button type="button" className="btn-ghost" onClick={onBack}>
@@ -300,6 +298,7 @@ function QuestionsPhase({
           }}
         >
           Continuer
+          <span aria-hidden>→</span>
         </button>
       </div>
     </div>
@@ -318,12 +317,12 @@ function ExtrasPhase({
   onFinish: () => void;
 }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <h1 className="font-[family-name:var(--font-display)] text-3xl leading-tight">
+        <h1 className="display text-3xl leading-tight sm:text-4xl">
           Une précision libre ?
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
           Optionnel. Ajoutez ce que les questions n’ont pas couvert.
         </p>
       </div>
@@ -339,6 +338,7 @@ function ExtrasPhase({
         </button>
         <button type="button" className="btn-primary" onClick={onFinish}>
           Générer le prompt
+          <span aria-hidden>→</span>
         </button>
       </div>
     </div>

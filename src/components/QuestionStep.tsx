@@ -11,7 +11,7 @@ type Props = {
 export function QuestionStep({ question, value, onChange }: Props) {
   if (question.inputType === "text") {
     return (
-      <div className="space-y-4">
+      <div className="space-y-5">
         <QuestionHeader question={question} />
         <textarea
           className="field-input min-h-28"
@@ -27,7 +27,7 @@ export function QuestionStep({ question, value, onChange }: Props) {
   if (question.inputType === "multi") {
     const selected = Array.isArray(value) ? value : [];
     return (
-      <div className="space-y-4">
+      <div className="space-y-5">
         <QuestionHeader question={question} />
         <div className="grid gap-2">
           {question.options?.map((opt) => {
@@ -45,9 +45,9 @@ export function QuestionStep({ question, value, onChange }: Props) {
                   }
                 }}
               >
-                <span className="font-medium">{opt.label}</span>
+                <span className="font-semibold">{opt.label}</span>
                 {opt.description ? (
-                  <span className="mt-0.5 block text-sm text-[var(--muted)]">
+                  <span className="mt-1 block text-sm text-[var(--muted)]">
                     {opt.description}
                   </span>
                 ) : null}
@@ -59,9 +59,8 @@ export function QuestionStep({ question, value, onChange }: Props) {
     );
   }
 
-  // single
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <QuestionHeader question={question} />
       <div className="grid gap-2">
         {question.options?.map((opt) => {
@@ -73,9 +72,9 @@ export function QuestionStep({ question, value, onChange }: Props) {
               className={`option-btn ${active ? "option-btn-active" : ""}`}
               onClick={() => onChange(opt.id)}
             >
-              <span className="font-medium">{opt.label}</span>
+              <span className="font-semibold">{opt.label}</span>
               {opt.description ? (
-                <span className="mt-0.5 block text-sm text-[var(--muted)]">
+                <span className="mt-1 block text-sm text-[var(--muted)]">
                   {opt.description}
                 </span>
               ) : null}
@@ -90,11 +89,13 @@ export function QuestionStep({ question, value, onChange }: Props) {
 function QuestionHeader({ question }: { question: Question }) {
   return (
     <div>
-      <h2 className="font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
+      <h2 className="display text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
         {question.label}
       </h2>
       {question.help ? (
-        <p className="mt-2 text-sm text-[var(--muted)]">{question.help}</p>
+        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+          {question.help}
+        </p>
       ) : null}
     </div>
   );
