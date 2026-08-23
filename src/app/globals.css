@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0a1628;
+  --ink-soft: #1c2b3f;
+  --muted: #5a6b7d;
+  --paper: #e8eef4;
+  --paper-deep: #d4dde8;
+  --line: rgba(10, 22, 40, 0.14);
+  --line-strong: rgba(10, 22, 40, 0.28);
+  --accent: #e24a1c;
+  --accent-ink: #fff7f2;
+  --steel: #2a5a8c;
+  --steel-soft: rgba(42, 90, 140, 0.12);
+  --track: #c5d0dc;
+  --surface: rgba(255, 255, 255, 0.55);
+  --mono-ink: #1a3348;
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(42, 90, 140, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 90, 140, 0.05) 1px, transparent 1px),
+    radial-gradient(ellipse 90% 60% at 80% -10%, rgba(42, 90, 140, 0.22), transparent 55%),
+    radial-gradient(ellipse 70% 50% at -5% 30%, rgba(226, 74, 28, 0.1), transparent 50%),
+    linear-gradient(165deg, #f2f6fa 0%, var(--paper) 42%, var(--paper-deep) 100%);
+  background-size:
+    48px 48px,
+    48px 48px,
+    auto,
+    auto,
+    auto;
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.brand {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.hero-title {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 80%, #000);
+  border-radius: 0.35rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.85rem 1.35rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--accent) 88%, #000);
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--ink);
+  padding: 0.85rem 1.2rem;
+  font-weight: 550;
+  font-size: 0.95rem;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.45);
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  border-radius: 0.4rem;
+  padding: 0.95rem 1.05rem;
+  outline: none;
+  font: inherit;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.field-input:focus {
+  border-color: var(--steel);
+  background: #fff;
+}
+
+.option-btn {
+  text-align: left;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.4rem;
+  padding: 0.95rem 1.05rem;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.option-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--steel);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.option-btn-active {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 10%, white);
+}
+
+.format-tab {
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.875rem;
+  background: transparent;
+  color: var(--muted);
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.format-tab:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.format-tab-active {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.savings-panel {
+  border-top: 3px solid var(--accent);
+  padding: 1.25rem 0 0;
+}
+
+.fade-up {
+  animation: fadeUp 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fade-in {
+  animation: fadeIn 800ms ease both;
+}
+
+.slide-in {
+  animation: slideIn 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes linePulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-12px);
+  }
+}
+
+.hero-lines span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--steel) 70%, transparent),
+    color-mix(in oklab, var(--accent) 55%, transparent),
+    transparent
+  );
+  animation: linePulse 3.6s ease-in-out infinite;
+}
+
+.hero-prompt-sheet {
+  animation: drift 7s ease-in-out infinite alternate;
+}
+
+.progress-track {
+  height: 2px;
+  width: 100%;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-in,
+  .slide-in,
+  .hero-lines span,
+  .hero-prompt-sheet {
+    animation: none !important;
+  }
+}
